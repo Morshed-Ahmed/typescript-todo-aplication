@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+.tit{
+  background-color: aqua;
+  border-radius: 0px 30px;
+}
+
+.todo-comment{
+  width: 50%;
+  margin: auto;
+  background-color: white;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+body{
+  background-color: #b1bbcf
+}
