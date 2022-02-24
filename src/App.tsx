@@ -1,7 +1,10 @@
 import React, { useCallback, useReducer, useRef } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Lists from './components/Lists';
+import { Card, CardActions, CardContent, CardMedia, Input, Typography } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 
 interface Todo {
@@ -10,7 +13,7 @@ interface Todo {
 }
 
 type ActionType =
-  { type: "ADD"; text: string }
+  { type: "ADD"; comment: string }
   | { type: "REMOVE"; id: number }
 
 function App() {
@@ -22,7 +25,7 @@ function App() {
           ...state,
           {
             id: state.length,
-            text: action.text
+            text: action.comment
           }
         ];
       case "REMOVE":
@@ -30,7 +33,7 @@ function App() {
     }
   }
 
-  const [todos, dispatch] = useReducer(reducer, [])
+  const [comments, dispatch] = useReducer(reducer, [])
 
   const newTodoRef = useRef<HTMLInputElement>(null)
 
@@ -39,7 +42,7 @@ function App() {
     if (newTodoRef.current) {
       dispatch({
         type: "ADD",
-        text: newTodoRef.current.value
+        comment: newTodoRef.current.value
       })
       newTodoRef.current.value = " ";
     }
@@ -54,14 +57,40 @@ function App() {
         <div className='div'>
           <h2 className='tit'>Please Comment</h2>
         </div>
+        <Card sx={{ maxWidth: 345, margin: 'auto  ' }}>
+          <CardMedia
+            component="img"
+            alt="green iguana"
+            /*  height="140" */
+            image="https://img.freepik.com/free-photo/young-attractive-handsome-guy-feels-delighted-gladden-amazed_295783-535.jpg?w=740"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              MORSHED
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Lizards are a widespread group of squamate reptiles, with over 6,000
+              species,
+            </Typography>
+          </CardContent>
+          <CardActions >
+            <div style={{ margin: 'auto', display: 'flex', alignItems: 'center' }}>
+              <input style={{ padding: 5, fontSize: 17 }} type="text" placeholder='please comment' ref={newTodoRef} />
+              <SendIcon sx={{ fontSize: 35, color: 'aqua' }} onClick={onAddTodo} />
+            </div>
 
-        <input type="text" ref={newTodoRef} />
-        <button onClick={onAddTodo}>Add</button>
-        {
-          todos.map((todo) => (
-            <div key={todo.id}> {todo.text} <button onClick={() => dispatch({ type: "REMOVE", id: todo.id })}>Remove</button> </div>
-          ))
-        }
+          </CardActions>
+          {
+            comments.map((todo) => (
+              <div key={todo.id}>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <Typography variant="h5">{todo.text}</Typography>
+                  <DeleteIcon onClick={() => dispatch({ type: "REMOVE", id: todo.id })} />
+                </div>
+              </div>
+            ))
+          }
+        </Card>
       </div>
 
     </div>
